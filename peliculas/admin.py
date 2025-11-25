@@ -1,25 +1,5 @@
 from django.contrib import admin
-from .models import (
-    Genero, Director, Actor, Pelicula, 
-    Calificacion, Resena, ListaPersonalizada
-)
-
-@admin.register(Genero)
-class GeneroAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'descripcion']
-    search_fields = ['nombre']
-
-@admin.register(Director)
-class DirectorAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'nacionalidad', 'fecha_nacimiento']
-    search_fields = ['nombre', 'nacionalidad']
-    list_filter = ['nacionalidad']
-
-@admin.register(Actor)
-class ActorAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'nacionalidad', 'fecha_nacimiento']
-    search_fields = ['nombre', 'nacionalidad']
-    list_filter = ['nacionalidad']
+from .models import Pelicula
 
 @admin.register(Pelicula)
 class PeliculaAdmin(admin.ModelAdmin):
@@ -51,26 +31,3 @@ class PeliculaAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-
-@admin.register(Calificacion)
-class CalificacionAdmin(admin.ModelAdmin):
-    list_display = ['pelicula', 'usuario', 'puntuacion', 'fecha']
-    search_fields = ['pelicula__titulo', 'usuario__username']
-    list_filter = ['puntuacion', 'fecha']
-    date_hierarchy = 'fecha'
-
-@admin.register(Resena)
-class ResenaAdmin(admin.ModelAdmin):
-    list_display = ['titulo', 'pelicula', 'usuario', 'fecha', 'util_count']
-    search_fields = ['titulo', 'contenido', 'pelicula__titulo', 'usuario__username']
-    list_filter = ['fecha']
-    date_hierarchy = 'fecha'
-    readonly_fields = ['fecha', 'actualizada']
-
-@admin.register(ListaPersonalizada)
-class ListaPersonalizadaAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'usuario', 'publica', 'fecha_creacion']
-    search_fields = ['nombre', 'descripcion', 'usuario__username']
-    list_filter = ['publica', 'fecha_creacion']
-    filter_horizontal = ['peliculas']
-    date_hierarchy = 'fecha_creacion'

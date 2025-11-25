@@ -214,20 +214,3 @@ def mi_perfil(request):
         'mis_resenas': mis_resenas,
     }
     return render(request, 'peliculas/perfil.html', context)
-
-@login_required
-def nueva_pelicula(request):
-    """Vista para agregar una nueva película, únicamente para administradores"""
-    if not request.user.is_staff:
-        messages.error(request, 'No tienes permiso para acceder a esta página.')
-        return redirect('peliculas:index')
-    if request.method == 'POST':
-        form = PeliculaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, '¡Nueva película agregada exitosamente!')
-            return redirect('peliculas:index')
-        pass
-    else:
-        form = PeliculaForm()
-    return render(request, 'peliculas/nueva_pelicula.html', {'form': form})
